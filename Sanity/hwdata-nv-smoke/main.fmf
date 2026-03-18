@@ -1,0 +1,6 @@
+summary: hwdata-nv smoke test
+description: |
+  Verify that the JSON database is valid and contains expected GPU
+  entry.
+requires:
+  - jq
