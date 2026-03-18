@@ -4,3 +4,5 @@ description: |
   entry.
 requires:
   - jq
+tag:
+  - hwdata-nv
