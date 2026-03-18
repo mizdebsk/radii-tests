@@ -1,0 +1,5 @@
+summary: rhel-drivers smoke test
+description: |
+  Verify basic functionality of rhel-drivers.
+environment+:
+  RADII: rhel-drivers
