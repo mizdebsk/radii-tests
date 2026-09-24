@@ -1,0 +1,12 @@
+summary: Test bare NVIDIA driver removal
+description: |
+  Verify that removing nvidia without a version removes the installed driver
+  stack and kernel modules while preserving unrelated packages. Install mock
+  RPMs with DNF so the test exercises removal independently of radii's
+  installation behavior, without requiring NVIDIA hardware.
+order: 60
+require:
+  - dnf-plugins-core
+  - type: library
+    nick: radii
+    name: /Library/mock-rpms
