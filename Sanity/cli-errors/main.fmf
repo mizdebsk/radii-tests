@@ -1,0 +1,12 @@
+summary: Test CLI errors without package changes
+description: |
+  Verify that invalid arguments, conflicting options, and unknown driver
+  versions fail with useful diagnostics on stderr and leave installed
+  packages unchanged. Mock repositories make version checks independent
+  of external driver repositories.
+order: 35
+require:
+  - dnf-plugins-core
+  - type: library
+    nick: radii
+    name: /Library/mock-rpms
