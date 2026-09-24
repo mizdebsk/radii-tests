@@ -3,7 +3,8 @@ description: |
   Verify that radii listings reflect repository availability and installed
   package state, including changes made outside radii. Use mock NVIDIA
   packages to check version ordering, installed markers, and empty results
-  without requiring GPU hardware or real drivers.
+  without requiring GPU hardware or real drivers. Installed drivers must
+  remain visible even after their packages disappear from the repository.
 require:
   - dnf-plugins-core
   - type: library
