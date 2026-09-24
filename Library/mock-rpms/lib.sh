@@ -40,8 +40,8 @@ radiiMakeRepo() {
     esac
     mkdir ${radiiMockRoot}/repos/${id}
     rlAssert0 "Create repository ${id}" $? || return
-    echo ${enabled} >${radiiMockRoot}/repos/${id}/enabled
-    rlAssert0 "Set repository ${id} enabled=${enabled}" $?
+    rlRun "echo ${enabled} >${radiiMockRoot}/repos/${id}/enabled" 0 \
+        "Set repository ${id} enabled=${enabled}"
 }
 
 # radiiBuildRpm ID SPEC [RPMBUILD_ARGUMENTS...]
