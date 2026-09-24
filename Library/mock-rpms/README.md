@@ -30,6 +30,8 @@ NVIDIA fixtures
 
 ```sh
 radiiBuildNvidiaDriver drivers 580.178.04
+# For installation tests, use this instead of the driver-only fixture:
+radiiBuildNvidiaStack drivers 580.178.04
 radiiBuildNvidiaKmod drivers 580.178.04 6.12.0-211.51.1.el10_2 default
 radiiBuildNvidiaKmod drivers 580.178.04 6.12.0-211.51.1.el10_2 64k --target aarch64
 ```
@@ -39,3 +41,8 @@ stack. Kmod packages preserve the supplied template's dependency metadata,
 including conditional kernel requirements. The 64k package also provides
 `kmod-64k-nvidia-open`, modeling the intended packaging fix. Neither fixture
 contains functional drivers or runs module-management scriptlets.
+
+`radiiBuildNvidiaStack` adds empty companion packages requested by radii and
+basic version dependencies. Its driver requires the matching `nvidia-kmod`
+provide, so build a kmod fixture separately. These packages do not reproduce
+the complete dependency graph or functionality of the real NVIDIA stack.

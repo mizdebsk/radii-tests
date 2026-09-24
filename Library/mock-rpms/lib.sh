@@ -73,6 +73,17 @@ radiiBuildNvidiaDriver() {
     radiiBuildRpm ${id} nvidia-driver --define "driver_version ${version}" "$@"
 }
 
+# radiiBuildNvidiaStack ID VERSION [RPMBUILD_ARGUMENTS...]
+# Build an empty driver and the companion packages installed by radii.
+# The driver requires a matching nvidia-kmod provide; build kmods separately.
+# Only basic version dependencies are modeled, with no payload or scripts.
+radiiBuildNvidiaStack() {
+    local id=$1 version=$2
+    shift 2
+    radiiBuildRpm ${id} nvidia-driver --define "driver_version ${version}" \
+        --define 'build_stack 1' "$@"
+}
+
 # radiiBuildNvidiaKmod ID VERSION KERNEL VARIANT [RPMBUILD_ARGUMENTS...]
 # KERNEL is version-release.elN[_N], without architecture or variant suffix.
 # VARIANT is default (also 4k or empty) or 64k. Each call builds one variant,
