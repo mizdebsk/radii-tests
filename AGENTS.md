@@ -11,6 +11,12 @@ Keep shell code close to Bourne shell style. Light Bash features, such as
 `[[ ... ]]`, `set -o pipefail`, and `shopt`, are welcome when they improve
 readability. Avoid arrays and other complex Bash-specific constructs.
 
+Use braces for named variable expansions, e.g. `${repoDir}` and `${HOME}`.
+Write redirections without a space after the operator, e.g. `>results.log`.
+Define defaults with `: ${TEST_OPTS=--verbose --offline}`. Avoid defensive
+quoting when values are known not to contain whitespace or glob characters;
+quote only when needed to preserve the intended behavior.
+
 Test conventions
 ----------------
 
