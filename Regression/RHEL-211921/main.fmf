@@ -1,0 +1,14 @@
+summary: Recognize the DGX Station GB300 GPU
+description: |
+  Verify that the installed NVIDIA hardware database includes PCI device
+  10de:31c3 with the kernelopen feature, which radii requires to recognize
+  the DGX Station GB300 GPU. The entry for 10de:31c2 does not cover this
+  device. This checks the packaged data without requiring GPU hardware.
+link:
+  - verifies: https://issues.redhat.com/browse/RHEL-211921
+tag:
+  - hwdata-nv
+tier: 1
+duration: 1m
+require:
+  - jq
