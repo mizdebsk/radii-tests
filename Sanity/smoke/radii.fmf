@@ -1,5 +1,4 @@
 summary: radii smoke test
 description: |
   Verify basic functionality of radii.
-environment+:
-  RADII: radii
+order: 20

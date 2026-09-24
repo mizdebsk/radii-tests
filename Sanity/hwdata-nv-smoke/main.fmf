@@ -6,3 +6,6 @@ require:
   - jq
 tag:
   - hwdata-nv
+order: 10
+tier: 0
+duration: 1m

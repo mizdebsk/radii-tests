@@ -4,8 +4,6 @@ description: |
   kernel modules while unversioned companion packages use their latest
   versions. Use mock RPMs to exercise package selection and dependency
   resolution without requiring NVIDIA hardware or functional drivers.
-environment+:
-  RADII: radii
 require:
   - dnf-plugins-core
   - type: library
@@ -13,11 +11,13 @@ require:
     name: /Library/mock-rpms
 
 /bare:
+  order: 50
   summary+: ' (bare)'
   description+: |
     Installing nvidia without a version should select the latest stack.
 
 /version:
+  order: 51
   summary+: ' (explicit version)'
   description+: |
     Requesting an older driver version should select that stack even when

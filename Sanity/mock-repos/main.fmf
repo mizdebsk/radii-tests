@@ -4,3 +4,4 @@ require:
   - type: library
     nick: radii
     name: /Library/mock-rpms
+order: 30
