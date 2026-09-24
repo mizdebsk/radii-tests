@@ -1,9 +1,9 @@
-summary: Test bare NVIDIA driver installation
+summary: Test NVIDIA driver installation
 description: |
-  Verify that installing nvidia without a version selects the latest
-  available driver stack and a kernel module for the running kernel variant.
-  Use mock RPMs to exercise package selection and dependency resolution
-  without requiring NVIDIA hardware or installing functional drivers.
+  Verify that NVIDIA installation selects matching driver packages and
+  kernel modules while unversioned companion packages use their latest
+  versions. Use mock RPMs to exercise package selection and dependency
+  resolution without requiring NVIDIA hardware or functional drivers.
 environment+:
   RADII: radii
 require:
@@ -11,3 +11,8 @@ require:
   - type: library
     nick: radii
     name: /Library/mock-rpms
+
+/bare:
+  summary+: ' (bare)'
+  description+: |
+    Installing nvidia without a version should select the latest stack.

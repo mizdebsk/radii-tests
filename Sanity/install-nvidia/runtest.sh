@@ -3,6 +3,8 @@
 
 : ${RADII=radii}
 : ${RADII_OPTS=--debug --skip-subscriptions}
+: ${RADII_DRIVER=nvidia}
+: ${RADII_DRIVER_VERSION=590.44.01}
 radii="${RADII} ${RADII_OPTS}"
 packages="nvidia-driver nvidia-driver-cuda nvidia-fabricmanager nvidia-fabric-manager-devel cublasmp cuda-compat cuda-toolkit cudnn dnf-plugin-nvidia libnccl-devel libnccl-static"
 
@@ -40,15 +42,18 @@ rlJournalStart
         done
         radiiExposeRepos
         for package in ${packages}; do
-            echo "${package} 590.44.01"
+            case ${package} in
+                nvidia-*) echo "${package} ${RADII_DRIVER_VERSION}" ;;
+                *) echo "${package} 590.44.01" ;;
+            esac
         done >expected
-        echo "kmod${suffix}-nvidia-open-590.44.01-${kernel%%.el*} 590.44.01" >>expected
+        echo "kmod${suffix}-nvidia-open-${RADII_DRIVER_VERSION}-${kernel%%.el*} ${RADII_DRIVER_VERSION}" >>expected
         rlRun "sort -o expected expected"
     rlPhaseEnd
 
-    rlPhaseStartTest "Install the default NVIDIA stack"
+    rlPhaseStartTest "Install ${RADII_DRIVER}"
         # Force bypasses hardware detection on guests without an NVIDIA GPU.
-        rlRun "${radii} install --batch --force nvidia"
+        rlRun "${radii} install --batch --force ${RADII_DRIVER}"
         rlRun "rpm -qa --qf '%{NAME} %{VERSION}\\n' | sort >installed-after"
         rlRun "comm -13 installed-before installed-after >installed-new"
         rlRun "diff -u expected installed-new"
