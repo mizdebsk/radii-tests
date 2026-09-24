@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - name: Install tmt
+        run: python -m pip install tmt
+      - name: Lint tmt metadata
+        run: tmt lint
+      - name: Check shell syntax
+        run: git ls-files -z '*.sh' | xargs -0 -r -n 1 bash -n
+      - name: Lint shell scripts
+        # Keep errors and warnings; skip informational quoting/style suggestions.
+        # SC1091: BeakerLib is sourced on test guests but is not installed here.
+        # SC2154: BeakerLib assigns variables such as rlRun_LOG dynamically.
+        run: git ls-files -z '*.sh' | xargs -0 -r shellcheck --shell=bash --severity=warning --exclude=SC1091,SC2154
