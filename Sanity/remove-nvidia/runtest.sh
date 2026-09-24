@@ -3,6 +3,7 @@
 
 : ${RADII=radii}
 : ${RADII_OPTS=--debug --skip-subscriptions}
+: ${RADII_EXTRA_KMOD_VERSION=}
 radii="${RADII} ${RADII_OPTS}"
 packages="nvidia-driver nvidia-driver-cuda nvidia-fabricmanager nvidia-fabric-manager-devel cublasmp cuda-compat cuda-toolkit cudnn dnf-plugin-nvidia libnccl-devel libnccl-static"
 
@@ -37,6 +38,10 @@ rlJournalStart
         radiiMakeRepo radii-remove
         radiiBuildNvidiaStack radii-remove 590.44.01
         radiiBuildNvidiaKmod radii-remove 590.44.01 ${kernel} ${variant}
+        if [ -n "${RADII_EXTRA_KMOD_VERSION}" ]; then
+            radiiBuildNvidiaKmod radii-remove ${RADII_EXTRA_KMOD_VERSION} ${kernel} ${variant}
+            kmod="${kmod} kmod${suffix}-nvidia-open-${RADII_EXTRA_KMOD_VERSION}-${kernel%%.el*}"
+        fi
         radiiBuildRpm radii-remove empty --define 'mock_name radii-mock-unrelated' --define 'mock_version 1.0'
         radiiExposeRepos
         rlRun "dnf -y install repos/radii-remove/*.rpm"
