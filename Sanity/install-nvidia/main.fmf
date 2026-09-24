@@ -1,0 +1,13 @@
+summary: Test bare NVIDIA driver installation
+description: |
+  Verify that installing nvidia without a version selects the latest
+  available driver stack and a kernel module for the running kernel variant.
+  Use mock RPMs to exercise package selection and dependency resolution
+  without requiring NVIDIA hardware or installing functional drivers.
+environment+:
+  RADII: radii
+require:
+  - dnf-plugins-core
+  - type: library
+    nick: radii
+    name: /Library/mock-rpms
