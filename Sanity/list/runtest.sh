@@ -55,10 +55,19 @@ rlJournalStart
         assertListings
     rlPhaseEnd
 
+    rlPhaseStartTest "List an installed driver no longer in the repository"
+        rlRun "mv repos/radii-list/nvidia-driver-580.178.04-1.noarch.rpm ."
+        radiiExposeRepos
+        rlRun "dnf -q --disablerepo='*' --enablerepo=radii-list repoquery --available --qf '%{version}' nvidia-driver >repo-versions"
+        rlAssertGrep 590.44.01 repo-versions -Fx
+        rlAssertNotGrep 580.178.04 repo-versions -Fx
+        assertListings
+    rlPhaseEnd
+
     rlPhaseStartTest "Remove the driver with DNF"
         rlRun "dnf -y remove nvidia-driver-580.178.04-1.noarch"
         rlRun "rpm -q nvidia-driver" 1
-        printf 'Available drivers:\n   nvidia:590.44.01\n   nvidia:580.178.04\n' >expected-available
+        printf 'Available drivers:\n   nvidia:590.44.01\n' >expected-available
         printf 'Installed drivers:\n' >expected-installed
         assertListings
     rlPhaseEnd
