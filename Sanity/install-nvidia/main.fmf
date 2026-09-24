@@ -16,3 +16,12 @@ require:
   summary+: ' (bare)'
   description+: |
     Installing nvidia without a version should select the latest stack.
+
+/version:
+  summary+: ' (explicit version)'
+  description+: |
+    Requesting an older driver version should select that stack even when
+    a newer version is available.
+  environment+:
+    RADII_DRIVER: nvidia:580.178.04
+    RADII_DRIVER_VERSION: 580.178.04
