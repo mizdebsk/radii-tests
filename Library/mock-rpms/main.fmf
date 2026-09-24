@@ -1,0 +1,6 @@
+summary: Build mock RPMs and local repositories
+/:
+  inherit: false
+require:
+  - rpm-build
+  - createrepo_c
