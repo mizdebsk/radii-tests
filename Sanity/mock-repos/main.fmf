@@ -1,0 +1,6 @@
+summary: Build and query mock package repositories
+require:
+  - dnf-plugins-core
+  - type: library
+    nick: radii
+    name: /Library/mock-rpms
