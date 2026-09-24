@@ -1,0 +1,9 @@
+summary: Test packaged Bash completion
+description: |
+  Verify that the installed completion offers radii commands and their
+  options, including kernel selection and variant values. Kernel release
+  arguments must not receive unrelated option suggestions.
+order: 25
+duration: 1m
+require:
+  - bash-completion
