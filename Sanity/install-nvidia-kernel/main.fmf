@@ -1,0 +1,31 @@
+summary: Test NVIDIA kernel selection
+description: |
+  Verify that an explicit kernel target selects its matching NVIDIA module
+  when modules for other kernels are available. Empty kernel providers
+  satisfy RPM dependencies without modifying the guest's bootable kernels.
+require:
+  - dnf-plugins-core
+  - type: library
+    nick: radii
+    name: /Library/mock-rpms
+
+/kernel:
+  order: 53
+
+/variant-default:
+  order: 54
+  summary+: ' (default variant)'
+  environment+:
+    RADII_KERNEL_VARIANT: default
+  adjust:
+    - when: arch is not defined or arch != aarch64
+      enabled: false
+
+/variant-64k:
+  order: 55
+  summary+: ' (64k variant)'
+  environment+:
+    RADII_KERNEL_VARIANT: 64k
+  adjust:
+    - when: arch is not defined or arch != aarch64
+      enabled: false
