@@ -3,3 +3,4 @@ description: |
   Verify basic functionality of rhel-drivers.
 environment+:
   RADII: rhel-drivers
+order: 21

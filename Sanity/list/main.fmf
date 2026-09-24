@@ -4,10 +4,9 @@ description: |
   package state, including changes made outside radii. Use mock NVIDIA
   packages to check version ordering, installed markers, and empty results
   without requiring GPU hardware or real drivers.
-environment+:
-  RADII: radii
 require:
   - dnf-plugins-core
   - type: library
     nick: radii
     name: /Library/mock-rpms
+order: 40

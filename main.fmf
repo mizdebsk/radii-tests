@@ -1,4 +1,8 @@
 contact: Mikolaj Izdebski <mizdebsk@redhat.com>
 framework: beakerlib
 test: ./runtest.sh
-tier: 0
+tier: 1
+order: 100
+duration: 15m
+environment:
+  RADII: radii
