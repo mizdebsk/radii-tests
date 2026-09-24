@@ -1,0 +1,13 @@
+summary: Test radii list subcommand
+description: |
+  Verify that radii listings reflect repository availability and installed
+  package state, including changes made outside radii. Use mock NVIDIA
+  packages to check version ordering, installed markers, and empty results
+  without requiring GPU hardware or real drivers.
+environment+:
+  RADII: radii
+require:
+  - dnf-plugins-core
+  - type: library
+    nick: radii
+    name: /Library/mock-rpms
