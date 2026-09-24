@@ -64,6 +64,41 @@ radiiBuildRpm() {
     rlAssert0 "Copy binary RPMs to repository ${id}" $?
 }
 
+# radiiBuildNvidiaDriver ID VERSION [RPMBUILD_ARGUMENTS...]
+# Build an empty nvidia-driver package for version discovery. This fixture
+# has no driver payload or dependencies on other NVIDIA packages.
+radiiBuildNvidiaDriver() {
+    local id=$1 version=$2
+    shift 2
+    radiiBuildRpm ${id} nvidia-driver --define "driver_version ${version}" "$@"
+}
+
+# radiiBuildNvidiaKmod ID VERSION KERNEL VARIANT [RPMBUILD_ARGUMENTS...]
+# KERNEL is version-release.elN[_N], without architecture or variant suffix.
+# VARIANT is default (also 4k or empty) or 64k. Each call builds one variant,
+# retaining the supplied packaging dependencies but no modules or scriptlets.
+# Builds for the host architecture unless --target is passed; 64k requires
+# aarch64. All output goes to the existing repository ID.
+radiiBuildNvidiaKmod() {
+    local id=$1 version=$2 kernel=$3 variant=$4 dist
+    shift 4
+    case ${variant} in
+        ''|default|4k) variant=default ;;
+        64k) ;;
+        *) rlFail "Unsupported kernel variant: ${variant}"; return 1 ;;
+    esac
+    case ${kernel} in
+        *-*.el*) dist=el${kernel#*.el} ;;
+        *) rlFail "Expected kernel version-release.elN: ${kernel}"; return 1 ;;
+    esac
+    radiiBuildRpm ${id} nvidia-kmod \
+        --define "driver_version ${version}" \
+        --define "kernel_version ${kernel}" \
+        --define "kernel_name_version ${kernel%%.el*}" \
+        --define "kernel_dist ${dist}" \
+        --define "kernel_variant ${variant}" "$@"
+}
+
 # radiiExposeRepos
 # Generate metadata for all workspace repositories and expose them through
 # one temporary /etc/yum.repos.d file, recorded in radiiMockRepoFile.

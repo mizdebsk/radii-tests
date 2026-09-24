@@ -24,3 +24,18 @@ metadata for every repository and a temporary file in `/etc/yum.repos.d`,
 whose path is `radiiMockRepoFile`. It preserves each repository's enabled
 setting. Call cleanup in the test's cleanup phase to remove both the repo
 file and workspace. Other repositories are left unchanged.
+
+NVIDIA fixtures
+---------------
+
+```sh
+radiiBuildNvidiaDriver drivers 580.178.04
+radiiBuildNvidiaKmod drivers 580.178.04 6.12.0-211.51.1.el10_2 default
+radiiBuildNvidiaKmod drivers 580.178.04 6.12.0-211.51.1.el10_2 64k --target aarch64
+```
+
+The driver is an empty package for version discovery, not a complete NVIDIA
+stack. Kmod packages preserve the supplied template's dependency metadata,
+including conditional kernel requirements. The 64k package also provides
+`kmod-64k-nvidia-open`, modeling the intended packaging fix. Neither fixture
+contains functional drivers or runs module-management scriptlets.
