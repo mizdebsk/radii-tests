@@ -1,0 +1,13 @@
+summary: Test NVIDIA driver upgrades
+description: |
+  Verify that installing the default NVIDIA stack over an older installation
+  upgrades the driver and companion packages and installs the matching kernel
+  module while preserving unrelated packages. Use mock RPMs to exercise the
+  upgrade without requiring NVIDIA hardware or functional drivers. Older
+  kernel modules remain installed for existing kernels.
+order: 52
+require:
+  - dnf-plugins-core
+  - type: library
+    nick: radii
+    name: /Library/mock-rpms
