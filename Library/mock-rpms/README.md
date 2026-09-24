@@ -46,3 +46,9 @@ contains functional drivers or runs module-management scriptlets.
 basic version dependencies. Its driver requires the matching `nvidia-kmod`
 provide, so build a kmod fixture separately. These packages do not reproduce
 the complete dependency graph or functionality of the real NVIDIA stack.
+
+The `kernel` spec builds an empty dependency provider named
+`radii-mock-kernel...`, not a bootable kernel. Pass `kernel_release` (for
+example, `6.12.0-1.el10`) and `kernel_suffix` (empty or `-64k`) to
+`radiiBuildRpm`. Kernel-selection tests use these fixtures to keep real
+kernel RPM dependencies without changing boot files.
